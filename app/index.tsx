@@ -1,6 +1,5 @@
 import { useRouter } from "expo-router";
 import { Button, H1, Text, XStack, YStack } from "tamagui";
-// import { useStore } from '../src/store/useStore';
 
 export default function Home() {
   const router = useRouter();
