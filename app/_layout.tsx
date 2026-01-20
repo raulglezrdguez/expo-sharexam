@@ -1,69 +1,42 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { defaultConfig } from "@tamagui/config/v4";
+import { RealmProvider } from "@realm/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
+import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import "react-native-reanimated";
-import { createTamagui, TamaguiProvider } from "tamagui";
+import { TamaguiProvider, Theme, ThemeName } from "tamagui";
 
-const config = createTamagui(defaultConfig);
+import config from "@/tamagui.config";
+// import { MySchema } from './src/db/schemas';
 
-import { useColorScheme } from "@/components/useColorScheme";
+const defaultTheme: ThemeName = "dark";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    ...FontAwesome.font,
+  const [interLoaded, interError] = useFonts({
+    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
+    if (interLoaded || interError) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [interLoaded, interError]);
 
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  if (!interLoaded && !interError) return null;
 
   return (
-    <TamaguiProvider config={config}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-      </ThemeProvider>
+    <TamaguiProvider config={config} defaultTheme={defaultTheme}>
+      <QueryClientProvider client={queryClient}>
+        <RealmProvider>
+          <Theme name={defaultTheme}>
+            <Stack>
+              <Stack.Screen name="index" options={{ title: "Inicio" }} />
+            </Stack>
+          </Theme>
+        </RealmProvider>
+      </QueryClientProvider>
     </TamaguiProvider>
   );
 }
