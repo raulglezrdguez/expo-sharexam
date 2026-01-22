@@ -1,4 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as AuthSession from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import { ActivityIndicator } from "react-native";
@@ -12,16 +13,26 @@ WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen() {
   const { mutate: login, isPending } = useGoogleLogin();
 
+  const redirectUri = AuthSession.makeRedirectUri({
+    // scheme: "com.raulglezrdguez.exposharexam",
+    native: "com.raulglezrdguez.exposharexam://",
+  });
+
   const [request, response, promptAsync] = Google.useAuthRequest({
     // iosClientId: 'TU_IOS_CLIENT_ID.apps.googleusercontent.com',
     androidClientId:
+      "897107187827-p0k44s9d8f9v7537mv9voe6objmmn7br.apps.googleusercontent.com",
+    webClientId:
       "897107187827-r0abkqa0l93refqvl0d628fjtqfo30ff.apps.googleusercontent.com",
+    redirectUri,
   });
 
   useEffect(() => {
     if (response?.type === "success") {
       const { id_token } = response.params;
-      login(id_token);
+      if (id_token) login(id_token);
+    } else if (response?.type === "error") {
+      console.error(response.error);
     }
   }, [response]);
 

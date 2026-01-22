@@ -17,8 +17,10 @@ export const useGoogleLogin = () => {
         body: JSON.stringify({ idToken: token }),
       });
 
-      if (!response.ok)
+      if (!response.ok) {
         throw new Error("Error en la autenticación con el servidor");
+      }
+
       return response.json();
     },
     onSuccess: (data) => {
