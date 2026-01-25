@@ -1,13 +1,26 @@
 import { RealmProvider } from "@realm/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack, useRouter, useSegments } from "expo-router";
+import {
+  SplashScreen,
+  Stack,
+  useRootNavigationState,
+  useRouter,
+  useSegments,
+} from "expo-router";
 import { useEffect, useState } from "react";
 import { TamaguiProvider, Theme, ThemeName } from "tamagui";
 
 import { UserProfile } from "@/src/db/UserSchema";
+import {
+  AppliedExam,
+  Exam,
+  ExamAnswer,
+  ExamResult,
+  Patient,
+} from "@/src/db/schemas";
+import { useAuthStore } from "@/src/store/authStore";
 import config from "@/tamagui.config";
-import { useAuthStore } from "../src/store/authStore";
 
 const defaultTheme: ThemeName = "dark";
 
@@ -18,6 +31,7 @@ export default function RootLayout() {
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
+  const navigationState = useRootNavigationState();
 
   const { isAuthenticated } = useAuthStore();
   const segments = useSegments();
@@ -30,16 +44,16 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (!isReady) return;
+    if (!isReady || !navigationState?.key) return;
 
     const inAuthGroup = segments[0] === "(auth)";
 
     if (!isAuthenticated && !inAuthGroup) {
       router.replace("/login");
     } else if (isAuthenticated && inAuthGroup) {
-      router.replace("/");
+      router.replace("/patients/index");
     }
-  }, [isAuthenticated, segments, isReady]);
+  }, [isAuthenticated, segments, isReady, navigationState?.key]);
 
   useEffect(() => {
     if (interLoaded || interError) {
@@ -52,11 +66,23 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={config} defaultTheme={defaultTheme}>
       <QueryClientProvider client={queryClient}>
-        <RealmProvider schema={[UserProfile]}>
+        <RealmProvider
+          schema={[
+            UserProfile,
+            Patient,
+            Exam,
+            ExamResult,
+            AppliedExam,
+            ExamAnswer,
+          ]}
+        >
           <Theme name={defaultTheme}>
-            <Stack>
-              <Stack.Screen name="index" options={{ title: "Inicio" }} />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack
+              initialRouteName="(tabs)"
+              screenOptions={{ headerShown: false }}
+            >
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(auth)" />
             </Stack>
           </Theme>
         </RealmProvider>

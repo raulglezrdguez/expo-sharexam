@@ -1,4 +1,4 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import * as AuthSession from "expo-auth-session";
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
@@ -37,7 +37,7 @@ export default function LoginScreen() {
   }, [response]);
 
   return (
-    <YStack f={1} jc="center" ai="center" bg="$background" p="$6" space="$8">
+    <YStack f={1} jc="center" ai="center" bg="$background" p="$6" gap="$8">
       <YStack ai="center" gap="$2">
         <View
           bg="$primary"
@@ -68,7 +68,7 @@ export default function LoginScreen() {
             isPending ? (
               <ActivityIndicator color="white" />
             ) : (
-              <Ionicons name="logo-google" size={20} />
+              <FontAwesome name="google" size={20} />
             )
           }
           bg="white"
