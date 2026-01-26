@@ -8,7 +8,9 @@ import {
   useRouter,
   useSegments,
 } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { TamaguiProvider, Theme, ThemeName } from "tamagui";
 
 import { UserProfile } from "@/src/db/UserSchema";
@@ -51,7 +53,7 @@ export default function RootLayout() {
     if (!isAuthenticated && !inAuthGroup) {
       router.replace("/login");
     } else if (isAuthenticated && inAuthGroup) {
-      router.replace("/patients/index");
+      router.replace("/patients");
     }
   }, [isAuthenticated, segments, isReady, navigationState?.key]);
 
@@ -64,29 +66,32 @@ export default function RootLayout() {
   if (!interLoaded && !interError) return null;
 
   return (
-    <TamaguiProvider config={config} defaultTheme={defaultTheme}>
-      <QueryClientProvider client={queryClient}>
-        <RealmProvider
-          schema={[
-            UserProfile,
-            Patient,
-            Exam,
-            ExamResult,
-            AppliedExam,
-            ExamAnswer,
-          ]}
-        >
-          <Theme name={defaultTheme}>
-            <Stack
-              initialRouteName="(tabs)"
-              screenOptions={{ headerShown: false }}
-            >
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="(auth)" />
-            </Stack>
-          </Theme>
-        </RealmProvider>
-      </QueryClientProvider>
-    </TamaguiProvider>
+    <SafeAreaProvider>
+      <TamaguiProvider config={config} defaultTheme={defaultTheme}>
+        <QueryClientProvider client={queryClient}>
+          <RealmProvider
+            schema={[
+              UserProfile,
+              Patient,
+              Exam,
+              ExamResult,
+              AppliedExam,
+              ExamAnswer,
+            ]}
+          >
+            <Theme name={defaultTheme}>
+              <StatusBar style="light" />
+              <Stack
+                initialRouteName="(tabs)"
+                screenOptions={{ headerShown: false }}
+              >
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="(auth)" />
+              </Stack>
+            </Theme>
+          </RealmProvider>
+        </QueryClientProvider>
+      </TamaguiProvider>
+    </SafeAreaProvider>
   );
 }

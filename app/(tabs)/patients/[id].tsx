@@ -86,7 +86,7 @@ export default function EditPatientScreen() {
 
           <XStack gap="$4">
             <YStack f={1}>
-              <Label>ID / Cédula</Label>
+              <Label>ID / CI</Label>
               <Controller
                 control={control}
                 name="identifier"

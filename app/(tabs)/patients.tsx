@@ -3,14 +3,24 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useQuery } from "@realm/react";
 import { useRouter } from "expo-router";
 import { FlatList } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, Card, H2, Separator, Text, XStack, YStack } from "tamagui";
 
 export default function PatientsScreen() {
   const router = useRouter();
   const patients = useQuery(Patient).sorted("name");
+  const insets = useSafeAreaInsets();
 
   return (
-    <YStack f={1} jc={"center"} ai={"center"} bg="$background" p="$4" gap="$4">
+    <YStack
+      f={1}
+      jc={"center"}
+      ai={"center"}
+      bg="$background"
+      p="$4"
+      gap="$4"
+      pt={insets.top}
+    >
       <XStack jc="space-between" ai="center" m="$4" gap="$4">
         <H2>Pacientes</H2>
         <Button
