@@ -55,6 +55,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="exams/[id]"
+        options={{
+          href: null,
+          title: "Detalles del Examen",
+        }}
+      />
+      <Tabs.Screen
         name="stats"
         options={{
           title: "Estadísticas",
