@@ -1,3 +1,8 @@
+interface Options {
+  id: string;
+  value: string;
+}
+
 export interface Node {
   id: string;
   type: string;
@@ -9,5 +14,19 @@ export interface Node {
     width: number;
     height: number;
   };
-  data?: Record<string, unknown>;
+  data?: {
+    label?: string;
+    // question
+    options?: Options[];
+    question?: string;
+    questionType?: string;
+    // http-request
+    endpoint?: string;
+    method?: string;
+    responseType: string;
+    // gemini
+    prompt?: string;
+    model?: string;
+    temperature?: string;
+  };
 }

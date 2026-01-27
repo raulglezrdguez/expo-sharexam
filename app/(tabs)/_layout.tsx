@@ -62,6 +62,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="diagrams/[id]"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
         name="stats"
         options={{
           title: "Estadísticas",

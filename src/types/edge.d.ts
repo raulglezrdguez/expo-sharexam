@@ -3,5 +3,5 @@ export interface Edge {
   source: string;
   target: string;
   type?: string;
-  data?: Record<string, unknown>;
+  data?: { condition?: string };
 }

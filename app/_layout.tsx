@@ -10,6 +10,7 @@ import {
 } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { TamaguiProvider, Theme, ThemeName } from "tamagui";
 
@@ -66,32 +67,34 @@ export default function RootLayout() {
   if (!interLoaded && !interError) return null;
 
   return (
-    <SafeAreaProvider>
-      <TamaguiProvider config={config} defaultTheme={defaultTheme}>
-        <QueryClientProvider client={queryClient}>
-          <RealmProvider
-            schema={[
-              UserProfile,
-              Patient,
-              Exam,
-              ExamResult,
-              AppliedExam,
-              ExamAnswer,
-            ]}
-          >
-            <Theme name={defaultTheme}>
-              <StatusBar style="light" />
-              <Stack
-                initialRouteName="(tabs)"
-                screenOptions={{ headerShown: false }}
-              >
-                <Stack.Screen name="(tabs)" />
-                <Stack.Screen name="(auth)" />
-              </Stack>
-            </Theme>
-          </RealmProvider>
-        </QueryClientProvider>
-      </TamaguiProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <TamaguiProvider config={config} defaultTheme={defaultTheme}>
+          <QueryClientProvider client={queryClient}>
+            <RealmProvider
+              schema={[
+                UserProfile,
+                Patient,
+                Exam,
+                ExamResult,
+                AppliedExam,
+                ExamAnswer,
+              ]}
+            >
+              <Theme name={defaultTheme}>
+                <StatusBar style="light" />
+                <Stack
+                  initialRouteName="(tabs)"
+                  screenOptions={{ headerShown: false }}
+                >
+                  <Stack.Screen name="(tabs)" />
+                  <Stack.Screen name="(auth)" />
+                </Stack>
+              </Theme>
+            </RealmProvider>
+          </QueryClientProvider>
+        </TamaguiProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

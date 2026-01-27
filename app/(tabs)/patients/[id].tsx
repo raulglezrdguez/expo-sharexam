@@ -25,8 +25,6 @@ export default function EditPatientScreen() {
   const router = useRouter();
   const realm = useRealm();
 
-  console.log(id);
-
   const patient = useObject(Patient, new BSON.ObjectId(id as string));
 
   const appliedExams = useQuery(AppliedExam)

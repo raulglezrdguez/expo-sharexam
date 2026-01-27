@@ -10,18 +10,28 @@ export default function ExamsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
+  console.log(exams);
   if (isLoading) {
     return (
-      <YStack f={1} jc="center" ai="center">
+      <YStack f={1} bg="$background" pt={insets.top} jc="center" ai="center">
         <Spinner size="large" color="$blue10" />
-        <Text mt="$2">Cargando exámenes...</Text>
+        <Text mt="$2" color="$gray10">
+          Cargando exámenes...
+        </Text>
       </YStack>
     );
   }
 
   if (error) {
     return (
-      <YStack f={1} jc="center" ai="center" p="$4">
+      <YStack
+        f={1}
+        bg="$background"
+        pt={insets.top}
+        jc="center"
+        ai="center"
+        p="$4"
+      >
         <Text color="$red10">Error al conectar con el servidor</Text>
         <Button
           icon={<FontAwesome name="refresh" size={24} />}
