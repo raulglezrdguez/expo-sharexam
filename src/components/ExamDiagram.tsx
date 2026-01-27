@@ -18,6 +18,7 @@ export default function ExamDiagram({ nodes, edges }: Props) {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const scale = useSharedValue(1);
+  const savedScale = useSharedValue(1);
 
   const startX = useSharedValue(0);
   const startY = useSharedValue(0);
@@ -37,9 +38,13 @@ export default function ExamDiagram({ nodes, edges }: Props) {
     });
 
   // Gesto de Zoom
-  const pinchGesture = Gesture.Pinch().onUpdate((e) => {
-    scale.value = e.scale;
-  });
+  const pinchGesture = Gesture.Pinch()
+    .onUpdate((e) => {
+      scale.value = savedScale.value * e.scale;
+    })
+    .onEnd(() => {
+      savedScale.value = scale.value;
+    });
 
   const composed = Gesture.Simultaneous(panGesture, pinchGesture);
 

@@ -10,7 +10,6 @@ export default function ExamsScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  console.log(exams);
   if (isLoading) {
     return (
       <YStack f={1} bg="$background" pt={insets.top} jc="center" ai="center">
