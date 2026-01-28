@@ -70,18 +70,18 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <TamaguiProvider config={config} defaultTheme={defaultTheme}>
-          <QueryClientProvider client={queryClient}>
-            <RealmProvider
-              schema={[
-                UserProfile,
-                Patient,
-                Exam,
-                ExamResult,
-                AppliedExam,
-                ExamAnswer,
-              ]}
-            >
-              <Theme name={defaultTheme}>
+          <Theme name={defaultTheme}>
+            <QueryClientProvider client={queryClient}>
+              <RealmProvider
+                schema={[
+                  UserProfile,
+                  Patient,
+                  Exam,
+                  ExamResult,
+                  AppliedExam,
+                  ExamAnswer,
+                ]}
+              >
                 <StatusBar style="light" />
                 <Stack
                   initialRouteName="(tabs)"
@@ -90,9 +90,9 @@ export default function RootLayout() {
                   <Stack.Screen name="(tabs)" />
                   <Stack.Screen name="(auth)" />
                 </Stack>
-              </Theme>
-            </RealmProvider>
-          </QueryClientProvider>
+              </RealmProvider>
+            </QueryClientProvider>
+          </Theme>
         </TamaguiProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

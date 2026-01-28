@@ -9,7 +9,7 @@ interface Props {
 
 export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
   const { type, position, data, measured } = node;
-  const width = node.measured.width;
+  const width = measured.width;
   const height = 80;
   const bgColor = "#898989";
   const headerColor = "#f0f0f0";

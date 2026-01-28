@@ -23,7 +23,7 @@ export interface Node {
     // http-request
     endpoint?: string;
     method?: string;
-    responseType: string;
+    responseType?: string;
     // gemini
     prompt?: string;
     model?: string;
