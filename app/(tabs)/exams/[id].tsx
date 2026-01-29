@@ -20,7 +20,7 @@ export default function ExamDetailScreen() {
       <YStack p="$4" gap="$4" rowGap={"$4"}>
         <XStack
           top={insets.top}
-          left={20}
+          left={0}
           right={20}
           jc="flex-start"
           ai="center"
