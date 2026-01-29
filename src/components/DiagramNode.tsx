@@ -68,19 +68,6 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
           font={fontBody}
           color="#333"
         />
-        <Text
-          x={10}
-          y={80}
-          text={
-            data?.questionType === "text"
-              ? "Texto"
-              : data?.questionType === "number"
-                ? "Número"
-                : "Lista"
-          }
-          font={fontBody}
-          color="#333"
-        />
       </Group>
     );
   }
