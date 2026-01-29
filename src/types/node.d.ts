@@ -24,7 +24,7 @@ export interface Node {
     endpoint?: string;
     method?: string;
     responseType?: string;
-    // gemini
+    // gemini & puter
     prompt?: string;
     model?: string;
     temperature?: string;

@@ -10,8 +10,6 @@ const NodeDetails = ({ node }: Props) => {
   const type = node.type;
   const data = node.data;
 
-  console.log(type);
-
   const getIcon = () => {
     switch (type) {
       case "question":
@@ -20,6 +18,8 @@ const NodeDetails = ({ node }: Props) => {
         return <FontAwesome name="database" size={20} color="#ababab" />;
       case "gemini":
         return <FontAwesome name="gift" size={20} color="#ababab" />;
+      case "puter":
+        return <FontAwesome name="cloud" size={20} color="#ababab" />;
       default:
         return <FontAwesome name="info" size={20} color="#ababab" />;
     }
@@ -74,6 +74,25 @@ const NodeDetails = ({ node }: Props) => {
               ))}
             </YStack>
           )}
+        </YStack>
+      )}
+
+      {type === "puter" && (
+        <YStack gap="$3" mb="$8">
+          <XStack ai="center" gap="$2">
+            <FontAwesome name="cloud" size={30} color="#ababab" />
+            <H4>IA</H4>
+          </XStack>
+
+          <YStack>
+            <Text fontWeight="bold">Prompt:</Text>
+            <Text fontSize="$5">{data?.prompt || "Sin prompt"}</Text>
+          </YStack>
+
+          <YStack>
+            <Text fontWeight="bold">Modelo:</Text>
+            <Text fontSize="$5">{data?.model || "Sin modelos"}</Text>
+          </YStack>
         </YStack>
       )}
 

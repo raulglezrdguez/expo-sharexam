@@ -10,7 +10,7 @@ interface Props {
 export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
   const { type, position, data, measured } = node;
   const width = measured.width;
-  const height = 80;
+  const height = measured.height;
   const bgColor = "#898989";
   const headerColor = "#f0f0f0";
 
@@ -19,7 +19,7 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
       <Group
         transform={[{ translateX: position.x }, { translateY: position.y }]}
       >
-        <Rect x={0} y={0} width={width} height={60} color={bgColor}>
+        <Rect x={0} y={0} width={width} height={height} color={bgColor}>
           <Shadow dx={0} dy={2} blur={4} color="#00000020" />
         </Rect>
 
@@ -27,7 +27,7 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
         <Text
           x={10}
           y={17}
-          text={"INPUT"}
+          text={"Input"}
           font={fontTitle}
           color={headerColor}
         />
@@ -48,7 +48,7 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
       <Group
         transform={[{ translateX: position.x }, { translateY: position.y }]}
       >
-        <Rect x={0} y={0} width={width} height={60} color={bgColor}>
+        <Rect x={0} y={0} width={width} height={height} color={bgColor}>
           <Shadow dx={0} dy={2} blur={4} color="#00000020" />
         </Rect>
 
@@ -68,6 +68,19 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
           font={fontBody}
           color="#333"
         />
+        <Text
+          x={10}
+          y={80}
+          text={
+            data?.questionType === "text"
+              ? "Texto"
+              : data?.questionType === "number"
+                ? "Número"
+                : "Lista"
+          }
+          font={fontBody}
+          color="#333"
+        />
       </Group>
     );
   }
@@ -77,7 +90,7 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
       <Group
         transform={[{ translateX: position.x }, { translateY: position.y }]}
       >
-        <Rect x={0} y={0} width={width} height={60} color={bgColor}>
+        <Rect x={0} y={0} width={width} height={height} color={bgColor}>
           <Shadow dx={0} dy={2} blur={4} color="#00000020" />
         </Rect>
 
@@ -94,6 +107,20 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
           x={10}
           y={50}
           text={data?.endpoint ? data.endpoint.substring(0, 25) + "..." : ""}
+          font={fontBody}
+          color="#333"
+        />
+        <Text
+          x={10}
+          y={80}
+          text={data?.method ? data.method : ""}
+          font={fontBody}
+          color="#333"
+        />
+        <Text
+          x={10}
+          y={110}
+          text={data?.responseType ? data.responseType : ""}
           font={fontBody}
           color="#333"
         />
@@ -135,7 +162,7 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
       <Group
         transform={[{ translateX: position.x }, { translateY: position.y }]}
       >
-        <Rect x={0} y={0} width={width} height={60} color={bgColor}>
+        <Rect x={0} y={0} width={width} height={height} color={bgColor}>
           <Shadow dx={0} dy={2} blur={4} color="#00000020" />
         </Rect>
 
@@ -159,12 +186,48 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
     );
   }
 
+  if (node.type === "puter") {
+    return (
+      <Group
+        transform={[{ translateX: position.x }, { translateY: position.y }]}
+      >
+        <Rect x={0} y={0} width={width} height={height} color={bgColor}>
+          <Shadow dx={0} dy={2} blur={4} color="#00000020" />
+        </Rect>
+
+        <Rect x={0} y={0} width={width} height={25} color="#449a44" />
+        <Text
+          x={10}
+          y={17}
+          text={`IA: ${node.id}`}
+          font={fontTitle}
+          color={headerColor}
+        />
+
+        <Text
+          x={10}
+          y={50}
+          text={data?.prompt ? data?.prompt.substring(0, 25) + "..." : ""}
+          font={fontBody}
+          color="#333"
+        />
+        <Text
+          x={10}
+          y={80}
+          text={data?.model ? data?.model.substring(0, 25) + "..." : ""}
+          font={fontBody}
+          color="#333"
+        />
+      </Group>
+    );
+  }
+
   if (node.type === "output") {
     return (
       <Group
         transform={[{ translateX: position.x }, { translateY: position.y }]}
       >
-        <Rect x={0} y={0} width={width} height={60} color={bgColor}>
+        <Rect x={0} y={0} width={width} height={height} color={bgColor}>
           <Shadow dx={0} dy={2} blur={4} color="#00000020" />
         </Rect>
 
@@ -172,7 +235,7 @@ export const DiagramNode = ({ node, fontTitle, fontBody }: Props) => {
         <Text
           x={10}
           y={17}
-          text={"OUTPUT"}
+          text={"Output"}
           font={fontTitle}
           color={headerColor}
         />

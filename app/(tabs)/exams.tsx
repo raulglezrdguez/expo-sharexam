@@ -1,7 +1,8 @@
 import { useExams } from "@/src/hooks/useExams";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
-import { FlatList } from "react-native";
+import { useState } from "react";
+import { FlatList, RefreshControl } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Button, Card, H2, Spinner, Text, XStack, YStack } from "tamagui";
 
@@ -9,6 +10,14 @@ export default function ExamsScreen() {
   const { data: exams, isLoading, error, refetch } = useExams();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
 
   if (isLoading) {
     return (
@@ -84,6 +93,9 @@ export default function ExamsScreen() {
               No hay exámenes disponibles
             </Text>
           </YStack>
+        }
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       />
     </YStack>

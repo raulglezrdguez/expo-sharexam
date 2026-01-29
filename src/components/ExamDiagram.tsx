@@ -29,8 +29,8 @@ export default function ExamDiagram({ nodes, edges }: Props) {
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [isPopupVisible, setPopupVisible] = useState(false);
 
-  const fontLabel = useFont(require("@/src/assets/fonts/Inter-Bold.ttf"), 12);
-  const fontText = useFont(require("@/src/assets/fonts/Inter-Regular.ttf"), 14);
+  const fontLabel = useFont(require("@/src/assets/fonts/Inter-Bold.ttf"), 18);
+  const fontText = useFont(require("@/src/assets/fonts/Inter-Regular.ttf"), 16);
 
   // Gesto de Pan (Mover el mapa)
   const panGesture = Gesture.Pan()
@@ -70,7 +70,7 @@ export default function ExamDiagram({ nodes, edges }: Props) {
         touchX >= node.position.x &&
         touchX <= node.position.x + node.measured.width &&
         touchY >= node.position.y &&
-        touchY <= node.position.y + nodeHeight
+        touchY <= node.position.y + node.measured.height
       );
     });
 
